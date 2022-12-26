@@ -12,13 +12,13 @@ export function AddReview() {
     function handleChange({ target }) {
         let { value, type, name: field } = target
         value = type === 'number' ? +value : value
-        if (type === 'number') {
-            value = {
-                ...reviewToEdit.fullName,
-                rating: +value,
-                readAt
-            }
-        }
+        // if (type === 'number') {
+        //     value = {
+        //         ...reviewToEdit.fullName,
+        //         rating: +value,
+        //         readAt
+        //     }
+        // }
         setReviewToEdit((prevReview) => ({ ...prevReview, [field]: value }))
     }
 
