@@ -9,6 +9,7 @@ import { Team } from "./cmps/team.jsx"
 import { Vision } from "./cmps/vision.jsx"
 import { Home } from './pages/home.jsx'
 import { About } from './pages/about.jsx'
+import { BookEdit } from './pages/book-edit.jsx'
 import { BookIndex } from './pages/book-index.jsx'
 import { BookDetails } from "./pages/book-details.jsx"
 
@@ -16,7 +17,6 @@ import { BookDetails } from "./pages/book-details.jsx"
 export function App() {
 
     const [page, setPage] = useState('book')
-    console.log('page is', page)
 
     return <Router>
 
@@ -34,6 +34,7 @@ export function App() {
                         <Route element={<Vision />} path="/about/vision" />
                     </Route>
                     <Route element={<BookIndex />} path="/book" />
+                    <Route element={<BookEdit />} path="/book/edit" />
                     <Route element={<BookDetails />} path="/book/:bookId" />
                 </Routes>
             </main>
