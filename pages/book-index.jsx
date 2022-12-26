@@ -4,25 +4,25 @@ const { Link } = ReactRouterDOM
 import { bookService } from './../services/book.service.js';
 import { BookList } from '../cmps/book-list.jsx';
 import { BookFilter } from '../cmps/book-filter.jsx';
-import { BookDetails } from './book-details.jsx';
-import { UserMsg } from '../cmps/user-msg.jsx';
+import { eventBusService, showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js';
 
 export function BookIndex() {
+
+    const [isLoading, setIsLoading] = useState(false)
     const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
     const [books, setBooks] = useState([])
-    const [selectedBook, setSelectedBook] = useState(null)
-    const [userMsg, setUserMsg] = useState('')
 
     console.log('books', books)
 
     useEffect(() => {
-        console.log('Loading books..')
+        setIsLoading(true)
         loadBooks()
     }, [filterBy])
 
     function loadBooks() {
         bookService.query(filterBy).then(booksToUpdate => {
             setBooks(booksToUpdate)
+            setIsLoading(false)
         })
     }
 
@@ -36,25 +36,15 @@ export function BookIndex() {
         bookService.remove(bookId).then(() => {
             const updatedBooks = books.filter(book => book.id !== bookId)
             setBooks(updatedBooks)
-            flashMsg('Book Removed!')
+            showSuccessMsg('Book removed!')
         })
-    }
-
-    function onSelectBook(bookId) {
-        bookService.get(bookId).then((book) => {
-            setSelectedBook(book)
+        .catch((err) => {
+            console.log('Had issues removing', err)
+            showErrorMsg('Could not remove book')
         })
-    }
-
-    function flashMsg(msg) {
-        setUserMsg(msg)
-        setTimeout(() => {
-            setUserMsg('')
-        }, 3000)
     }
 
     return <section className="book-index full main-layout">
-        {userMsg && <UserMsg msg={userMsg} />}
         <div className="full main-layout">
 
             <h2>hello from book index</h2>
@@ -62,7 +52,9 @@ export function BookIndex() {
 
             <Link to="/book/edit">Add Book!</Link>
 
-            <BookList books={books} onRemoveBook={onRemoveBook} />
+            {!isLoading && <BookList books={books} onRemoveBook={onRemoveBook} />}
+            {isLoading && <div>Loading..</div>}
+            {!books.length && <div>No cars to show..</div>}
         </div>
     </section>
 }

@@ -29,7 +29,6 @@ export function BookFilter({ onSetFilter }) {
         onSetFilter(filterByToEdit)
     }
 
-    console.log(elInputRef)
     return <section className="book-filter">
         <h2>Filter out books</h2>
         <form onSubmit={onSubmitFilter}>

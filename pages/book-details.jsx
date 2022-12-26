@@ -50,7 +50,7 @@ export function BookDetails() {
     if (!book) return <div>Loading...</div>
     return <section className="book-details">
         <h2>{book.title}</h2>
-        <img src={book.thumbnail} />
+        <img src={book.thumbnail ? book.thumbnail : `assets/style/img/default.png`} />
         <h3>Language: {book.language}</h3>
         <h3>Pages: {(displayPage) ? displayPage : bookPages}</h3>
         <h2 className={book.listPrice.amount <= 50 ? 'green' : 'red'}>
