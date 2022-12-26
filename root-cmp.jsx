@@ -7,7 +7,7 @@ import { AboutIndex } from "./cmps/about-index.jsx"
 import { AppHeader } from './cmps/app-header.jsx'
 import { Team } from "./cmps/team.jsx"
 import { Vision } from "./cmps/vision.jsx"
-import { UserMsg } from "./cmps/user-msg.jsx"
+import { UserMessage } from "./cmps/user-msg.jsx"
 import { Home } from './pages/home.jsx'
 import { About } from './pages/about.jsx'
 import { BookEdit } from './pages/book-edit.jsx'
@@ -41,7 +41,7 @@ export function App() {
                 </Routes>
             </main>
 
-            <UserMsg />
+            <UserMessage />
         </section>
     </Router>
 }
