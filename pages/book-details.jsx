@@ -51,7 +51,6 @@ export function BookDetails() {
     return <section className="book-details">
         <h2>{book.title}</h2>
         <img src={book.thumbnail} />
-        <h2>{book.authors[0]}</h2>
         <h3>Language: {book.language}</h3>
         <h3>Pages: {(displayPage) ? displayPage : bookPages}</h3>
         <h2 className={book.listPrice.amount <= 50 ? 'green' : 'red'}>
@@ -59,6 +58,7 @@ export function BookDetails() {
                 + book.listPrice.currencyCode}
         </h2>
         <LongTxt txt={book.description} length={100} />
-        <Link to={`/book`}> Go Back </Link>
+        <Link to={`/book`}> Go Back </Link>  |
+        <Link to={`/book/edit/${book.id}`}> Edit Me </Link>
     </section>
 }

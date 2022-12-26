@@ -35,6 +35,7 @@ export function App() {
                     </Route>
                     <Route element={<BookIndex />} path="/book" />
                     <Route element={<BookEdit />} path="/book/edit" />
+                    <Route element={<BookEdit />} path="/book/edit/:bookId" />
                     <Route element={<BookDetails />} path="/book/:bookId" />
                 </Routes>
             </main>

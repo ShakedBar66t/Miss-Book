@@ -53,8 +53,8 @@ function remove(bookId) {
 
 
 
-function getEmptyBook(title = '', listPrice = '') {
-  return { id: '', title, listPrice }
+function getEmptyBook(title = '', amount = '') {
+  return { id: '', title, listPrice:{amount, currencyCode:'ILS',}, language:'he' }
 }
 
 function _createBooks() {
@@ -458,7 +458,7 @@ function _createBooks() {
         }
       },
       {
-        "id": "u3j6QIKLlJb",
+        "id": "u3j6QIKLlJb", 
         "title": "rhoncus vivamus",
         "subtitle": "nullam class risus amet senectus scelerisque etiam curabitur",
         "authors": [
