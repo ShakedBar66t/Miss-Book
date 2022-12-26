@@ -1,8 +1,9 @@
 const { useState, useEffect } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
 
-import { bookService } from "../services/book.service.js"
+import { BookService } from "../services/book.service.js"
 import { LongTxt } from "./long-txt.jsx"
+import { AddReview } from "../cmps/add-review.jsx"
 
 
 export function BookDetails() {
@@ -17,7 +18,7 @@ export function BookDetails() {
     }, [])
 
     function loadBook() {
-        bookService.get(params.bookId)
+        BookService.get(params.bookId)
             .then((book) => {
                 setBook(book)
             })
@@ -60,5 +61,6 @@ export function BookDetails() {
         <LongTxt txt={book.description} length={100} />
         <Link to={`/book`}> Go Back </Link>  |
         <Link to={`/book/edit/${book.id}`}> Edit Me </Link>
+        <AddReview/>
     </section>
 }

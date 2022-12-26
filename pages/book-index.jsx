@@ -1,7 +1,7 @@
 const { useState, useEffect } = React
 const { Link } = ReactRouterDOM
 
-import { bookService } from './../services/book.service.js';
+import { BookService } from './../services/book.service.js';
 import { BookList } from '../cmps/book-list.jsx';
 import { BookFilter } from '../cmps/book-filter.jsx';
 import { eventBusService, showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js';
@@ -9,7 +9,7 @@ import { eventBusService, showErrorMsg, showSuccessMsg } from '../services/event
 export function BookIndex() {
 
     const [isLoading, setIsLoading] = useState(false)
-    const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
+    const [filterBy, setFilterBy] = useState(BookService.getDefaultFilter())
     const [books, setBooks] = useState([])
 
     console.log('books', books)
@@ -20,7 +20,7 @@ export function BookIndex() {
     }, [filterBy])
 
     function loadBooks() {
-        bookService.query(filterBy).then(booksToUpdate => {
+        BookService.query(filterBy).then(booksToUpdate => {
             setBooks(booksToUpdate)
             setIsLoading(false)
         })
@@ -33,7 +33,7 @@ export function BookIndex() {
 
 
     function onRemoveBook(bookId) {
-        bookService.remove(bookId).then(() => {
+        BookService.remove(bookId).then(() => {
             const updatedBooks = books.filter(book => book.id !== bookId)
             setBooks(updatedBooks)
             showSuccessMsg('Book removed!')
