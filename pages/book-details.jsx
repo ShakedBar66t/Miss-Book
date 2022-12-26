@@ -1,11 +1,33 @@
-const { useState } = React
+const { useState, useEffect } = React
+const { useParams, useNavigate, Link } = ReactRouterDOM
 
+import { bookService } from "../services/book.service.js"
 import { LongTxt } from "./long-txt.jsx"
 
 
-export function BookDetails({ book, onGoBack }) {
-    const [bookPages, setPages] = useState(book.pageCount)
-    const [bookPublishDate, setDate] = useState(book.publishedDate)
+export function BookDetails() {
+    const [book, setBook] = useState(null)
+    const [bookPages, setPages] = useState(null)
+    const [bookPublishDate, setDate] = useState(null)
+    const params = useParams()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        loadBook()
+    }, [])
+
+    function loadBook() {
+        bookService.get(params.bookId)
+            .then((book) => {
+                setBook(book)
+            })
+            .catch((err) => {
+                console.log('Had issues in book details', err)
+                navigate('/book')
+            })
+    }
+
+
     let bookDate = new Date().getFullYear()
     let publishDate
     if (bookDate - 1 <= bookPublishDate) {
@@ -14,6 +36,7 @@ export function BookDetails({ book, onGoBack }) {
         publishDate = 'Vintage'
     }
 
+    
     let displayPage
     if (bookPages > 500) {
         displayPage = 'Serious Reading'
@@ -24,7 +47,7 @@ export function BookDetails({ book, onGoBack }) {
         displayPage = 'Light Reading '
     }
 
-
+    if (!book) return <div>Loading...</div>
     return <section className="book-details">
         <h2>{book.title}</h2>
         <img src={book.thumbnail} />
@@ -36,6 +59,6 @@ export function BookDetails({ book, onGoBack }) {
                 + book.listPrice.currencyCode}
         </h2>
         <LongTxt txt={book.description} length={100} />
-        <button onClick={onGoBack}>Go Back</button>
+        <Link to={`/book`}> Go Back </Link>
     </section>
 }

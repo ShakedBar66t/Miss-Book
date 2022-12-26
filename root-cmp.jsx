@@ -10,6 +10,7 @@ import { Vision } from "./cmps/vision.jsx"
 import { Home } from './pages/home.jsx'
 import { About } from './pages/about.jsx'
 import { BookIndex } from './pages/book-index.jsx'
+import { BookDetails } from "./pages/book-details.jsx"
 
 
 export function App() {
@@ -25,6 +26,7 @@ export function App() {
 
             <main className="full main-layout">
                 <Routes>
+                    
                     <Route element={<Home />} path="/" />
                     <Route element={<About />} path="/about">
                         <Route element={<AboutIndex />} path="/about" />
@@ -32,6 +34,7 @@ export function App() {
                         <Route element={<Vision />} path="/about/vision" />
                     </Route>
                     <Route element={<BookIndex />} path="/book" />
+                    <Route element={<BookDetails />} path="/book/:bookId" />
                 </Routes>
             </main>
         </section>

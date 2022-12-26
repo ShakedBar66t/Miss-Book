@@ -1,4 +1,4 @@
-button {
+button, Link {
     cursor: pointer;
     background-color: var(--clr2bg);
     margin: 0.5em;
