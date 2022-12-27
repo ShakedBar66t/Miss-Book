@@ -60,10 +60,8 @@ function getEmptyBook(title = '', amount = '') {
   }
 }
 
-function getEmptyReview(fullName = '', rating = '', readAt = '') {
-  return {
-    fullName, rating, readAt
-  }
+function getEmptyReview() {
+  return {id: '', rating: 0, readAt: '', fullName: ''}
 }
 
 
@@ -512,6 +510,10 @@ function _createBooks() {
         }
       }
     ]
+    books.forEach(book => {
+      book.reviews = []
+    })
+
     utilService.saveToStorage(BOOK_KEY, books)
   }
 }

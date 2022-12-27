@@ -2,8 +2,11 @@ const { useState, useEffect } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
 
 import { BookService } from "../services/book.service.js"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
+
 import { LongTxt } from "./long-txt.jsx"
 import { AddReview } from "../cmps/add-review.jsx"
+import { ReviewList } from "../cmps/review-list.jsx"
 
 
 export function BookDetails() {
@@ -26,6 +29,31 @@ export function BookDetails() {
                 console.log('Had issues in book details', err)
                 navigate('/book')
             })
+    }
+
+    function onRemoveReview(reviewId){
+        const reviews = book.reviews.filter(review => review.id !== reviewId)
+        const updateBook = {...book, reviews}
+        BookService.save(updateBook).then((book) => {
+            showSuccessMsg('Review deleted')
+            setBook(book)
+        })
+        .catch((err) => {
+            console.log(err)
+            showErrorMsg('Could not remove review')
+        })
+    }
+
+    function onSaveReview(bookToSave){
+        const newBook = {...bookToSave}
+        BookService.save(newBook)
+        .then((bookFromService) => {
+            setBook(bookFromService)
+        })
+        .catch ((err) => {
+            console.log('err', err)
+        })
+
     }
 
 
@@ -61,6 +89,8 @@ export function BookDetails() {
         <LongTxt txt={book.description} length={100} />
         <Link to={`/book`}> Go Back </Link>  |
         <Link to={`/book/edit/${book.id}`}> Edit Me </Link>
-        <AddReview/>
+        <AddReview book={book} onSaveReview={onSaveReview}/>
+        {(!book.reviews.length) && <span className="title">No reviews yet</span>}
+        {<ReviewList book={book} onRemoveReview={onRemoveReview} />}
     </section>
 }
